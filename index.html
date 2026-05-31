@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Sebastian Triesch — computational biologist developing machine learning tools and reproducible workflows for genomics, gene regulation and multi-omics."
+  />
+  <title>Sebastian Triesch</title>
+
+
+  <style>
+    :root {
+      --black: #00154d;
+      --ink: #00154d;
+      --muted: rgba(0, 21, 77, 0.66);
+      --paper: #f7f8fb;
+      --white: #ffffff;
+      --soft: #edf2ff;
+      --accent: #dfe8ff;
+      --accent-2: #9fb4ff;
+      --line: rgba(0, 21, 77, 0.14);
+      --max-width: 1120px;
+      --radius: 22px;
+      --shadow: 0 18px 45px rgba(0, 21, 77, 0.08);
+      --shadow-hover: 0 24px 60px rgba(0, 21, 77, 0.13);
+      --mono: ui-monospace, SFMono-Regular, "Cascadia Mono", "Cascadia Code", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      font-weight: 430;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid var(--accent-2);
+      outline-offset: 3px;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: var(--black);
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      z-index: 999;
+      transform: translateY(-180%);
+      padding: 0.65rem 0.9rem;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--ink);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 4.25rem;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--ink);
+      font-size: clamp(1rem, 2vw, 1.22rem);
+      font-weight: 780;
+      letter-spacing: -0.03em;
+    }
+
+    .logo-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 2.15rem;
+      height: 2.15rem;
+      background: var(--ink);
+      border-radius: 0.7rem;
+      color: var(--white);
+      font-family: var(--mono);
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: -0.08em;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0.35rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.2rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 650;
+      transition: background 0.16s ease, color 0.16s ease;
+    }
+
+    .nav-links a:hover {
+      background: var(--soft);
+      color: var(--ink);
+    }
+
+    .hero {
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 88% 10%, rgba(0, 21, 77, 0.06), transparent 19rem),
+        linear-gradient(120deg, rgba(237, 242, 255, 0.65), transparent 42%),
+        var(--white);
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: clamp(1.75rem, 4vw, 3.25rem);
+      align-items: center;
+      padding: clamp(3rem, 8vw, 5.8rem) 0;
+    }
+
+    .portrait {
+      width: 220px;
+      height: 220px;
+      overflow: hidden;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      margin-bottom: 1rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+      text-transform: none;
+    }
+
+    h1 {
+      max-width: 11ch;
+      font-size: clamp(3rem, 8vw, 6.1rem);
+      font-weight: 820;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      margin: 1rem 0 0;
+      color: var(--ink);
+      font-size: clamp(1.05rem, 2vw, 1.32rem);
+      font-weight: 520;
+      line-height: 1.5;
+    }
+
+    .affiliation {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1.35rem 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 600;
+    }
+
+    .affiliation li {
+      padding: 0.35rem 0.65rem;
+      border: 1px solid rgba(0, 21, 77, 0.10);
+      border-radius: 999px;
+      background: rgba(237, 242, 255, 0.75);
+    }
+
+    .section {
+      padding: clamp(3rem, 7vw, 5rem) 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-title {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 2rem;
+      font-size: clamp(1.65rem, 4vw, 3rem);
+      font-weight: 780;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      left: 0.03em;
+      right: 0.03em;
+      bottom: -0.35rem;
+      height: 0.2rem;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+    .about-panel {
+      position: relative;
+      padding: clamp(1.25rem, 3vw, 2rem);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow);
+    }
+
+    .about-panel::before {
+      content: attr(data-label);
+      display: inline-block;
+      margin-bottom: 1rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 750;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .about-panel p {
+      margin: 0 0 1rem;
+      font-size: 1rem;
+    }
+
+    .about-panel p:last-child {
+      margin-bottom: 0;
+    }
+
+    .interests strong,
+    strong {
+      color: var(--ink);
+      font-weight: 760;
+    }
+
+    .card-grid {
+      display: grid;
+      gap: 1.15rem;
+    }
+
+    .card {
+      position: relative;
+      padding: clamp(1.25rem, 3vw, 2rem);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 1px 0 rgba(0, 21, 77, 0.04);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .card::before {
+      display: none;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0, 21, 77, 0.24);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .card-title {
+      max-width: 850px;
+      margin-bottom: 1rem;
+      font-size: clamp(1.35rem, 3vw, 2.2rem);
+      font-weight: 780;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.28rem 0.62rem;
+      border: 1px solid rgba(0, 21, 77, 0.10);
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--white);
+      font-size: 0.76rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .tag.tech {
+      background: var(--soft);
+      color: var(--ink);
+    }
+
+    .card p {
+      max-width: 850px;
+      margin: 0 0 0.8rem;
+      color: var(--ink);
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .card-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1.25rem;
+    }
+    
+    .about-panel:not([data-label])::before {
+  display: none;
+}
+
+    .button-link,
+    .note-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      min-height: 2.45rem;
+      padding: 0.45rem 0.8rem;
+      border: 1px solid rgba(0, 21, 77, 0.15);
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--ink);
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: background-color 0.16s ease, color 0.16s ease, transform 0.16s ease;
+    }
+
+    .button-link:hover {
+      transform: translateY(-1px);
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .note-pill {
+      color: var(--muted);
+    }
+
+    .publication-list {
+      display: grid;
+      gap: 0.9rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: publication;
+    }
+
+    .publication-item {
+      counter-increment: publication;
+      position: relative;
+    }
+
+    .publication-link {
+      position: relative;
+      display: grid;
+      grid-template-columns: 3rem minmax(0, 1fr);
+      gap: 1rem;
+      min-height: 100%;
+      padding: 1.15rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--ink);
+      box-shadow: 0 1px 0 rgba(0, 21, 77, 0.04);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+    }
+
+    .publication-link:hover,
+    .publication-link:focus-visible {
+      transform: translateY(-3px);
+      border-color: rgba(0, 21, 77, 0.24);
+      background: var(--white);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .publication-link::after {
+      content: "open publication ↗";
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      padding: 0.25rem 0.55rem;
+      border: 1px solid rgba(0, 21, 77, 0.13);
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      transform: translateY(-0.2rem);
+      transition: opacity 0.16s ease, transform 0.16s ease;
+      pointer-events: none;
+    }
+
+    .publication-link:hover::after,
+    .publication-link:focus-visible::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .pub-index {
+      display: grid;
+      place-items: center;
+      align-self: start;
+      width: 2.55rem;
+      height: 2.55rem;
+      border-radius: 0.85rem;
+      background: var(--soft);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.88rem;
+      font-weight: 750;
+    }
+
+    .pub-index::before {
+      content: counter(publication, decimal-leading-zero);
+    }
+
+    .pub-text {
+      min-width: 0;
+      padding-right: 9rem;
+    }
+
+    .pub-title {
+      font-weight: 430;
+    }
+
+    .author-self {
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .publication-link:hover .pub-title,
+    .publication-link:focus-visible .pub-title {
+      color: var(--ink);
+    }
+
+    .pub-meta {
+      display: inline;
+      color: var(--muted);
+    }
+
+    .pub-note {
+      display: inline-block;
+      margin-top: 0.35rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    footer {
+      padding: 2rem 0 3rem;
+      background: var(--ink);
+      color: var(--white);
+      font-size: 0.86rem;
+      font-weight: 650;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    @media (max-width: 820px) {
+      .header-content {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 0.85rem 0;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+      .hero-content,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .portrait {
+        width: 172px;
+        height: 172px;
+        border-radius: 1.5rem;
+      }
+
+      h1 {
+        max-width: none;
+      }
+
+      .publication-link {
+        grid-template-columns: 1fr;
+      }
+
+      .pub-text {
+        padding-right: 0;
+      }
+
+      .publication-link::after {
+        position: static;
+        display: inline-flex;
+        justify-self: start;
+        margin-top: 0.4rem;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-content">
+      <a class="logo" href="#" aria-label="Sebastian Triesch homepage">
+        <span class="logo-mark">ST</span>
+        <span>sebastian triesch</span>
+      </a>
+
+      <nav aria-label="Main navigation">
+        <ul class="nav-links">
+          <li><a href="mailto:sebastian-triesch@t-online.de">Email</a></li>
+          <li><a href="https://github.com/setri100">GitHub</a></li>
+          <li><a href="https://orcid.org/0000-0001-7796-4631">ORCID</a></li>
+          <li><a href="https://scholar.google.com/citations?user=krQ6KKcAAAAJ&hl=de">Scholar</a></li>
+          <li><a href="#publications">Publications</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-label="Profile">
+      <div class="container hero-content">
+        <div class="portrait">
+          <img src="assets/profile.jpg" alt="Sebastian Triesch">
+        </div>
+
+        <div>
+          <span class="eyebrow">Computational biology · Gene regulation · Plant genomics</span>
+          <h1>Sebastian Triesch</h1>
+          <p class="subtitle">I work where plant genomics and machine learning meet experimental discovery.</p>
+          <ul class="affiliation" aria-label="Affiliation">
+            <li>Institute of Synthetic Biology</li>
+            <li>Heinrich Heine University Düsseldorf</li>
+            <li>CEPLAS</li>
+            <li>Germany</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section" aria-labelledby="about-title">
+      <div class="container">
+        <h2 id="about-title" class="section-title">About</h2>
+
+        <div class="grid-2">
+          <div class="about-panel">
+            <p>
+              I am a computational biologist and quantitative geneticist interested in how genomes encode biological function. My work combines plant genomics, biostatistics, regulatory sequence analysis and machine learning to connect genetic variation with gene regulation and complex traits.
+            </p>
+            <p>
+            I am a biochemist by training and began my scientific career in experimental biology. During my PhD, I moved from the bench into computational genomics, generating and analyzing multi-omics, epigenomic and single-cell datasets for non-model plant systems.
+            </p>
+            <p>
+             In my current postdoctoral work, I use machine learning as one quantitative tool to model regulatory DNA, interpret genetic variation and understand how plant genomes shape complex traits.
+            </p>
+          </div>
+
+
+        </div>
+      </div>
+    </section>
+
+    <section id="software" class="section" aria-labelledby="software-title">
+      <div class="container">
+        <h2 id="software-title" class="section-title">Software</h2>
+
+        <div class="card-grid">
+          <article class="card" data-code="tool / 01">
+            <h3 class="card-title">PETAL</h3>
+
+            <div class="tags" aria-label="PETAL keywords">
+              <span class="tag tech">Gene regulation</span>
+              <span class="tag tech">Deep learning</span>
+              <span class="tag tech">Python</span>
+              <span class="tag tech">Web app</span>
+            </div>
+
+            <p>
+              PETAL is an end-to-end machine learning platform for predictive modeling of regulatory DNA sequences. It combines model prediction, interpretation and sequence evolution workflows in a web-accessible format.
+            </p>
+            <p>
+              PETAL is currently being deployed and will be released soon.
+            </p>
+            <div class="card-links">
+              <span class="note-pill">Coming soon</span>
+            </div>
+          </article>
+
+          <article class="card" data-code="tool / 02">
+            <h3 class="card-title">SEPAL</h3>
+
+            <div class="tags" aria-label="SEPAL keywords">
+              <span class="tag tech">Embedded system</span>
+              <span class="tag tech">Plant environment control</span>
+              <span class="tag tech">Raspberry Pi</span>
+            </div>
+
+            <p>
+              SEPAL is a low-cost, modular plant environment monitoring system built on a Raspberry Pi. It provides a user-friendly interface for monitoring environmental parameters such as temperature, humidity and light in plant growth chambers or greenhouses.
+            </p>
+
+            <div class="card-links">
+              <a class="button-link" href="https://github.com/setri100/sepal">GitHub ↗</a>
+            </div>
+          </article>
+
+          <article class="card" data-code="tool / 03">
+            <h3 class="card-title">Helixer</h3>
+
+            <div class="tags" aria-label="Helixer keywords">
+              <span class="tag tech">Genome annotation</span>
+              <span class="tag tech">Deep learning</span>
+              <span class="tag tech">Python</span>
+            </div>
+
+            <p>
+              Helixer is a deep learning-based gene annotation tool for eukaryotic genomes. It combines deep neural networks with a hidden Markov model to predict primary gene models from genomic DNA sequences.
+            </p>
+            <p>
+              I contributed to Helixer as a co-author involved in the biological validation and interpretation of the model.
+            </p>
+
+            <div class="card-links">
+              <a class="button-link" href="https://github.com/usadellab/Helixer">GitHub ↗</a>
+              <a class="button-link" href="https://www.plabipd.de/helixer_main.html">Web tool ↗</a>
+              <a class="button-link" href="https://www.nature.com/articles/s41592-025-02939-1">Paper ↗</a>
+            </div>
+          </article>
+
+
+          <article class="card" data-code="tool / 03">
+            <h3 class="card-title">Predmoter</h3>
+
+            <div class="tags" aria-label="Predmoter keywords">
+              <span class="tag tech">Epigenetics</span>
+              <span class="tag tech">Deep learning</span>
+              <span class="tag tech">Python</span>
+            </div>
+
+            <p>
+              Predmoter is a deep learning-based tool for predicting plant promoter and enhancer regions across species.
+            </p>
+            <p>
+              I contributed to Predmoter as a co-author involved in project conceptualization, data analysis and interpretation of the model.
+            </p>
+
+            <div class="card-links">
+              <a class="button-link" href="https://github.com/weberlab-hhu/Predmoter">GitHub ↗</a>
+              <a class="button-link" href="https://academic.oup.com/bioinformaticsadvances/article/4/1/vbae074/7681899">Paper ↗</a>
+            </div>
+          </article>
+
+
+        </div>
+      </div>
+    </section>
+
+    <section id="publications" class="section" aria-labelledby="publications-title">
+      <div class="container">
+        <h2 id="publications-title" class="section-title">Publications</h2>
+
+        
+        <ol class="publication-list">
+          <li class="publication-item">
+            <a class="publication-link" href="https://pubmed.ncbi.nlm.nih.gov/40590299/" title="">
+              <span class="pub-index" aria-hidden="true"></span>
+              <span class="pub-text">
+                <span class="pub-title"><span class="author-self" aria-label="Sebastian Triesch">Triesch, S.</span>, Reichel-Deland, V., Valderrama Martín, J.M., Melzer, M., Schlüter, U., Weber, A.P.M. Single-nuclei sequencing of <em>Moricandia arvensis</em> reveals bundle-sheath cell function in the photorespiratory shuttle of C<sub>3</sub>–C<sub>4</sub> intermediate Brassicaceae.</span>
+                <span class="pub-meta"><em>Journal of Experimental Botany</em>, eraf245 (2025).</span>
+              </span>
+            </a>
+          </li>
+
+          <li class="publication-item">
+            <a class="publication-link" href="https://pubmed.ncbi.nlm.nih.gov/40312562/" title="">
+              <span class="pub-index" aria-hidden="true"></span>
+              <span class="pub-text">
+                <span class="pub-title">Dickinson, P.J., <span class="author-self" aria-label="Sebastian Triesch">Triesch, S.</span>, Schlüter, U., Weber, A.P.M., Hibberd, J.M. A transcription factor module mediating C<sub>2</sub> photosynthesis in the Brassicaceae.</span>
+                <span class="pub-meta"><em>EMBO Reports</em>, 1–8 (2025).</span>
+              </span>
+            </a>
+          </li>
+
+          <li class="publication-item">
+            <a class="publication-link" href="https://pubmed.ncbi.nlm.nih.gov/41286201/" title="">
+              <span class="pub-index" aria-hidden="true"></span>
+              <span class="pub-text">
+                <span class="pub-title">Holst, F., Bolger, A., Günther, C., Maß, J., <span class="author-self" aria-label="Sebastian Triesch">Triesch, S.</span>, Kindel, F., Kiel, N., Saadat, N., Ebenhöh, O., Usadel, B., Schwacke, R., Bolger, M., Weber, A.P.M., Denton, A.K. Helixer: ab initio prediction of primary eukaryotic gene models combining deep learning and a hidden Markov model.</span>
+                <span class="pub-meta"><em>Nature Methods</em>, 1–8 (2025).</span>
+              </span>
+            </a>
+          </li>
+
+          <li class="publication-item">
+            <a class="publication-link" href="https://pubmed.ncbi.nlm.nih.gov/38168881/" title="">
+              <span class="pub-index" aria-hidden="true"></span>
+              <span class="pub-text">
+                <span class="pub-title"><span class="author-self" aria-label="Sebastian Triesch">Triesch, S.</span>, Denton, A.K., Bouvier, J.W., Buchmann, J.P., Reichel-Deland, V., Guerreiro, R.N.F.M., Busch, N., Schlüter, U., Stich, B., Kelly, S., Weber, A.P.M. Transposable elements contribute to the establishment of the glycine shuttle in Brassicaceae species.</span>
+                <span class="pub-meta"><em>Plant Biology</em> 26(2): 270–281 (2024).</span>
+              </span>
+            </a>
+          </li>
+
+          <li class="publication-item">
+            <a class="publication-link" href="https://pubmed.ncbi.nlm.nih.gov/38841126/" title="">
+              <span class="pub-index" aria-hidden="true"></span>
+              <span class="pub-text">
+                <span class="pub-title">Kindel, F., <span class="author-self" aria-label="Sebastian Triesch">Triesch, S.</span>, Schlüter, U., Randarevitch, L.A., Reichel-Deland, V., Weber, A.P.M., Denton, A.K. Predmoter: cross-species prediction of plant promoter and enhancer regions.</span>
+                <span class="pub-meta"><em>Bioinformatics Advances</em> 4(1): vbae074 (2024).</span>
+              </span>
+            </a>
+          </li>
+
+          <li class="publication-item">
+            <a class="publication-link" href="https://pubmed.ncbi.nlm.nih.gov/37324717/" title="">
+              <span class="pub-index" aria-hidden="true"></span>
+              <span class="pub-text">
+                <span class="pub-title">Germann, A.T., Nakielski, A., Dietsch, M., Petzel, T., Moser, D., <span class="author-self" aria-label="Sebastian Triesch">Triesch, S.</span>, Westhoff, P., Axmann, I.M. A systematic overexpression approach reveals native targets to increase squalene production in <em>Synechocystis</em> sp. PCC 6803.</span>
+                <span class="pub-meta"><em>Frontiers in Plant Science</em> 14: 1024981 (2023).</span>
+              </span>
+            </a>
+          </li>
+
+          <li class="publication-item">
+            <a class="publication-link" href="https://www.sciencedirect.com/science/article/abs/pii/S0176161723000226" title="">
+              <span class="pub-index" aria-hidden="true"></span>
+              <span class="pub-text">
+                <span class="pub-title">Segura Broncano, L., Pukacz, K.R., Reichel-Deland, V., Schlüter, U., <span class="author-self" aria-label="Sebastian Triesch">Triesch, S.</span>, Weber, A.P.M. Photorespiration is the solution, not the problem.</span>
+                <span class="pub-meta"><em>Journal of Plant Physiology</em> 282: 153928 (2023).</span>
+              </span>
+            </a>
+          </li>
+
+          <li class="publication-item">
+            <a class="publication-link" href="https://pubmed.ncbi.nlm.nih.gov/37431820/" title="">
+              <span class="pub-index" aria-hidden="true"></span>
+              <span class="pub-text">
+                <span class="pub-title">Guerreiro, R., Bonthala, V.S., Schlüter, U., Hoang, N.V., <span class="author-self" aria-label="Sebastian Triesch">Triesch, S.</span>, Schranz, M.E., Weber, A.P.M., Stich, B. A genomic panel for studying C<sub>3</sub>–C<sub>4</sub> intermediate photosynthesis in the Brassiceae tribe.</span>
+                <span class="pub-meta"><em>Plant, Cell &amp; Environment</em> 46(11): 3611–3627 (2023).</span>
+              </span>
+            </a>
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <span>© <span id="year"></span> Sebastian Triesch</span>
+    
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
